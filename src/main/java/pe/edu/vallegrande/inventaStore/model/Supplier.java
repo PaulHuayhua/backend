@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -42,4 +43,6 @@ public class Supplier {
     @Column(name = "state")
     private String state;
 
+    @Column(name = "registration_date")
+    private LocalDate registration_date;
 }
