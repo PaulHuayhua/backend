@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "a7f84ebc-dbbd-434a-afef-d3ab9de55055",
+		"name": "SQL_SERVER_supplier",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "43465893",
+		"_collection_link": "https://yumsum.postman.co/workspace/SQL_Server~6debf808-b673-47c2-bd08-b20214b1f451/collection/43465893-a7f84ebc-dbbd-434a-afef-d3ab9de55055?action=share&source=collection_link&creator=43465893"
+	},
+	"item": [
+		{
+			"name": "FOLDER",
+			"item": [
+				{
+					"name": "CREATE | CREAR",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pedro Sánchez\",\r\n    \"company\": \"florida\",\r\n    \"supply_type\": \"Bebidas\",\r\n    \"address\": \"Av. Perú 123\",\r\n    \"email_business\": \"contacto@andina.com\",\r\n    \"cellular\": \"987654325\",\r\n    \"ruc\": \"20123456789\",\r\n    \"state\": \"A\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/save",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR X ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/2",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "READ | LISTAR X STATE",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/state/A",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"state",
+								"A"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE | EDITAR",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"identifier\": 3,\r\n    \"name\": \"Pedro Sánchez\",\r\n    \"company\": \"florida\",\r\n    \"supply_type\": \"Golosinas\",\r\n    \"address\": \"Av. Perú 525\",\r\n    \"email_business\": \"contacto@andina.com\",\r\n    \"cellular\": \"987654523\",\r\n    \"ruc\": \"20123456789\",\r\n    \"state\": \"A\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/update",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE | ELIMINAR LOGICAMENTE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/delete/3",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RESTORE | RESTAURAR LOGICAMENTE",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "https://orange-enigma-r4r55x6pw697cpp64-8085.app.github.dev/v1/api/supplier/restore/3",
+							"protocol": "https",
+							"host": [
+								"orange-enigma-r4r55x6pw697cpp64-8085",
+								"app",
+								"github",
+								"dev"
+							],
+							"path": [
+								"v1",
+								"api",
+								"supplier",
+								"restore",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
