@@ -34,7 +34,7 @@ public class ProductRest {
 
     // ✅ Buscar productos por estado (ej. A o I)
     @GetMapping("/state/{state}")
-    public List<Product> findByState(@PathVariable String state) {
+    public List<Product> findByState(@PathVariable Boolean state) {
         return productService.findByState(state);
     }
 

@@ -7,10 +7,8 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // Buscar productos por estado (ej. "A" activo o "I" inactivo)
-    List<Product> findByState(String state);
+    List<Product> findByState(Boolean state);
 
-    // Buscar productos por nombre (contiene texto, ignorando mayúsculas)
     List<Product> findByNameContainingIgnoreCase(String name);
 
 }

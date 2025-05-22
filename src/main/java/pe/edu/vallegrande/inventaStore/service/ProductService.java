@@ -11,7 +11,7 @@ public interface ProductService {
 
     Optional<Product> findById(Long id);
 
-    List<Product> findByState(String state);
+    List<Product> findByState(Boolean state);
 
     List<Product> searchByName(String name);  
 

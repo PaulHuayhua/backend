@@ -33,8 +33,8 @@ public class Product {
     @Column(name = "expiration_date")
     private LocalDate expiration_date;
 
-    @Column(name = "state", nullable = false, length = 1)
-    private String state = "A";
+    @Column(name = "state", nullable = false)
+    private Boolean state = true;
 
     @Column(name = "category", nullable = false, length = 100)
     private String category;
