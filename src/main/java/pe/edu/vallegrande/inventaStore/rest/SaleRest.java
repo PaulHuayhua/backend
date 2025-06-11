@@ -2,7 +2,6 @@ package pe.edu.vallegrande.inventaStore.rest;
 
 import pe.edu.vallegrande.inventaStore.model.Sale;
 import pe.edu.vallegrande.inventaStore.service.SaleService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +33,11 @@ public class SaleRest {
     @PostMapping("/save")
     public Sale save(@RequestBody Sale sale) {
         return saleService.save(sale);
+    }
+
+    @PutMapping("/update")
+    public Sale update(@RequestBody Sale sale) {
+        return saleService.update(sale);
     }
 
 }

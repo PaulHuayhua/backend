@@ -1,10 +1,10 @@
 package pe.edu.vallegrande.inventaStore.repository;
 
-import pe.edu.vallegrande.inventaStore.model.Buy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import pe.edu.vallegrande.inventaStore.model.PurchaseDetail;
 
 @Repository
-public interface BuyRepository extends JpaRepository<Buy, Long> {
+public interface PurchaseDetailRepository extends JpaRepository<PurchaseDetail, Long> {
 
 }

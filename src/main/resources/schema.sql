@@ -1,19 +1,13 @@
--- Primero eliminamos tablas hijas que referencian a otras
 DROP TABLE IF EXISTS sale_detail;
-DROP TABLE IF EXISTS buys_detail;
+DROP TABLE IF EXISTS purchase_detail;
 
 DROP TABLE IF EXISTS sale;
-DROP TABLE IF EXISTS buys;
+DROP TABLE IF EXISTS purchase;
 
--- Ahora eliminamos las tablas de entidades “padre”
 DROP TABLE IF EXISTS [user];
 DROP TABLE IF EXISTS customer;
 DROP TABLE IF EXISTS supplier;
 DROP TABLE IF EXISTS product;
-
--- --------------------------------------------------
--- A partir de aquí, las CREATE TABLE en el mismo orden
--- --------------------------------------------------
 
 CREATE TABLE product (
     identifier INT NOT NULL IDENTITY(1,1),
@@ -33,22 +27,20 @@ CREATE TABLE product (
 );
 
 CREATE TABLE supplier (
-   identifier INT NOT NULL IDENTITY(1,1),
-   name VARCHAR(80) NOT NULL,
-   company VARCHAR(100) NOT NULL,
-   supply_type VARCHAR(50) NOT NULL,
-   address VARCHAR(150) NOT NULL,
-   email_business VARCHAR(255) NOT NULL,
-   cellular CHAR(9) NOT NULL,
-   ruc CHAR(11) NOT NULL,
-   registration_date DATE NOT NULL DEFAULT GETDATE(),
+   identifier int  NOT NULL IDENTITY(1, 1),
+   company varchar(100)  NOT NULL,
+   supply_type varchar(50)  NOT NULL,
+   address varchar(150)  NOT NULL,
+   email_business varchar(255)  NOT NULL,
+   cell_phone char(9)  NOT NULL,
+   ruc char(11)  NOT NULL,
+   registration_date date  NOT NULL DEFAULT GETDATE(),
    state bit  NOT NULL DEFAULT 1,
-   CONSTRAINT uq_name_ruc_supplier UNIQUE (name, ruc),
-   CONSTRAINT chk_cellular CHECK (LEN(cellular) = 9 AND cellular LIKE '9%' AND cellular NOT LIKE '%[^0-9]%'),
+   CONSTRAINT uq_ruc_supplier UNIQUE (ruc),
+   CONSTRAINT chk_cell_phone CHECK (LEN(cell_phone) = 9 AND  cell_phone LIKE '9%' AND  cell_phone NOT LIKE '%[^0-9]%'),
    CONSTRAINT chk_ruc CHECK (LEN(ruc) = 11 AND ruc NOT LIKE '%[^0-9]%'),
    CONSTRAINT chk_email_business CHECK (email_business LIKE '_%@_%._%' AND LEN(email_business) <= 255 AND email_business NOT LIKE '% %'),
-   CONSTRAINT chk_name_supplier CHECK (LEN(name) >= 3 AND name NOT LIKE '%[^a-zA-ZáéíóúÁÉÍÓÚ ]%'),
-   CONSTRAINT proveedor_pk PRIMARY KEY (identifier)
+   CONSTRAINT proveedor_pk PRIMARY KEY  (identifier)
 );
 
 CREATE TABLE customer (
@@ -66,7 +58,7 @@ CREATE TABLE [user] (
     email VARCHAR(255) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     rol VARCHAR(60) NOT NULL,
-    state CHAR(1) NOT NULL DEFAULT 'A',
+    state bit NOT NULL DEFAULT 1,
     registration_date DATE NOT NULL DEFAULT GETDATE(),
     CONSTRAINT uq_email UNIQUE (email),
     CONSTRAINT chk_email CHECK (email LIKE '_%@_%._%' AND email NOT LIKE '% %'),
@@ -77,13 +69,15 @@ CREATE TABLE [user] (
 );
 
 CREATE TABLE sale (
-    identifier INT NOT NULL IDENTITY(1,1),
-    issue_date DATETIME NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL,
-    customer_identifier INT NOT NULL,
-    user_identifier INT NOT NULL,
-    CONSTRAINT chk_total_price_sale CHECK (total_price >= 0),
-    CONSTRAINT venta_pk PRIMARY KEY (identifier)
+   identifier int  NOT NULL IDENTITY(1, 1),
+   issue_date datetime  NOT NULL,
+   total_price decimal(10,2)  NOT NULL,
+   payment_method varchar(20)  NOT NULL,
+   customer_identifier int  NOT NULL,
+   user_identifier int  NOT NULL,
+   CONSTRAINT chk_total_price_sale CHECK (total_price >= 0),
+   CONSTRAINT chk_payment_method_sale CHECK (payment_method NOT LIKE '%[^a-zA-ZáéíóúÁÉÍÓÚ ]%'),
+   CONSTRAINT venta_pk PRIMARY KEY  (identifier)
 );
 
 CREATE TABLE sale_detail (
@@ -97,26 +91,27 @@ CREATE TABLE sale_detail (
     CONSTRAINT detalle_venta_pk PRIMARY KEY (identifier)
 );
 
-CREATE TABLE buys (
-    identifier INT NOT NULL IDENTITY(1,1),
-    buys_date DATETIME NOT NULL,
-    total_price DECIMAL(10,2) NOT NULL,
-    user_identifier INT NOT NULL,
-    supplier_identifier INT NOT NULL,
-    CONSTRAINT chk_total_price_buys CHECK (total_price >= 0),
-    CONSTRAINT compra_pk PRIMARY KEY (identifier)
+CREATE TABLE purchase (
+   identifier int  NOT NULL IDENTITY(1, 1),
+   purchase_date datetime  NOT NULL,
+   total_price decimal(10,2)  NOT NULL,
+   payment_method varchar(20)  NOT NULL,
+   user_identifier int  NOT NULL,
+   supplier_identifier int  NOT NULL,
+   CONSTRAINT chk_total_price_purchase CHECK (total_price >= 0),
+   CONSTRAINT compra_pk PRIMARY KEY  (identifier)
 );
 
-CREATE TABLE buys_detail (
+CREATE TABLE purchase_detail (
    identifier INT NOT NULL IDENTITY(1,1),
    amount INT NOT NULL,
    unit_cost DECIMAL(10,2) NOT NULL,
    subtotal DECIMAL(10,2) NOT NULL,
-   buys_identifier INT NOT NULL,
+   purchase_identifier INT NOT NULL,
    product_identifier INT NOT NULL,
-   CONSTRAINT chk_amount_buys CHECK (amount >= 0),
-   CONSTRAINT chk_unit_cost CHECK (unit_cost >= 0),
-   CONSTRAINT chk_subtotal_buys CHECK (subtotal = amount * unit_cost),
+   CONSTRAINT chk_amount_purchase CHECK (amount >= 0),
+   CONSTRAINT chk_unit_cost_purchase CHECK (unit_cost >= 0),
+   CONSTRAINT chk_subtotal_purchase CHECK (subtotal = amount * unit_cost),
    CONSTRAINT detalle_compra_pk PRIMARY KEY (identifier)
 );
 
@@ -137,23 +132,23 @@ ALTER TABLE sale ADD CONSTRAINT sale_customer
     REFERENCES customer (identifier)
     ON UPDATE CASCADE;
 
-ALTER TABLE buys ADD CONSTRAINT buys_user
+ALTER TABLE purchase ADD CONSTRAINT purchase_user
     FOREIGN KEY (user_identifier)
     REFERENCES [user] (identifier)
     ON UPDATE CASCADE;
 
-ALTER TABLE buys ADD CONSTRAINT buys_supplier
+ALTER TABLE purchase ADD CONSTRAINT purchase_supplier
     FOREIGN KEY (supplier_identifier)
     REFERENCES supplier (identifier)
     ON UPDATE CASCADE;
 
-ALTER TABLE buys_detail ADD CONSTRAINT buys_detail_buys
-    FOREIGN KEY (buys_identifier)
-    REFERENCES buys (identifier)
+ALTER TABLE purchase_detail ADD CONSTRAINT purchase_detail_purchase
+    FOREIGN KEY (purchase_identifier)
+    REFERENCES purchase (identifier)
     ON DELETE CASCADE
     ON UPDATE CASCADE;
 
-ALTER TABLE buys_detail ADD CONSTRAINT buys_detail_product
+ALTER TABLE purchase_detail ADD CONSTRAINT purchase_detail_product
     FOREIGN KEY (product_identifier)
     REFERENCES product (identifier)
     ON UPDATE CASCADE;

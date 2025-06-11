@@ -69,3 +69,4 @@ public class ProductRest {
         return productService.restoreById(id);
     }
 }
+

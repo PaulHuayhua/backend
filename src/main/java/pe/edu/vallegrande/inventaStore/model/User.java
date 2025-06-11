@@ -26,8 +26,8 @@ public class User {
     @Column(name = "rol", nullable = false, length = 60)
     private String rol;
 
-    @Column(name = "state", nullable = false, length = 1)
-    private String state = "A";
+    @Column(name = "state", nullable = false)
+    private Boolean state = true;
 
     @Column(name = "registration_date", nullable = false)
     private LocalDate registration_date;

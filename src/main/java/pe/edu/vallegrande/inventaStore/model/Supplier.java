@@ -34,8 +34,8 @@ public class Supplier {
     @Column(name = "email_business")
     private String email_business;
 
-    @Column(name = "cellular")
-    private String cellular;
+    @Column(name = "cell_phone")
+    private String cell_phone;
 
     @Column(name = "ruc")
     private String ruc;
