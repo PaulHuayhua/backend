@@ -1,43 +1,43 @@
 package pe.edu.vallegrande.inventaStore.rest;
 
-import pe.edu.vallegrande.inventaStore.model.Purchase;
-import pe.edu.vallegrande.inventaStore.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import pe.edu.vallegrande.inventaStore.model.Purchase;
+import pe.edu.vallegrande.inventaStore.service.PurchaseService;
 
 import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/v1/api/buys")
+@RequestMapping("/v1/api/purchase")
 public class PurchaseRest {
 
-    private final PurchaseService buysService;
+    private final PurchaseService purchaseService;
 
     @Autowired
-    public PurchaseRest(PurchaseService buysService) {
-        this.buysService = buysService;
+    public PurchaseRest(PurchaseService purchaseService) {
+        this.purchaseService = purchaseService;
     }
 
     @GetMapping
     public List<Purchase> findAll() {
-        return buysService.findAll();
+        return purchaseService.findAll();
     }
 
-    @GetMapping("/{identifier}")
-    public Optional<Purchase> findById(@PathVariable Long identifier) {
-        return buysService.findById(identifier);
+    @GetMapping("/{id}")
+    public Optional<Purchase> findById(@PathVariable Long id) {
+        return purchaseService.findById(id);
     }
 
-    @PostMapping("/save")
-    public Purchase save(@RequestBody Purchase buys) {
-        return buysService.save(buys);
+    @PostMapping
+    public Purchase save(@RequestBody Purchase purchase) {
+        return purchaseService.save(purchase);
     }
 
-    @PutMapping("/update")
-    public Purchase update(@RequestBody Purchase buys) {
-        return buysService.update(buys);
+    @PutMapping("/{id}")
+    public Purchase update(@PathVariable Long id, @RequestBody Purchase purchase) {
+        purchase.setIdentifier(id); // Asegura que se actualice la entidad correcta
+        return purchaseService.update(purchase);
     }
-
 }

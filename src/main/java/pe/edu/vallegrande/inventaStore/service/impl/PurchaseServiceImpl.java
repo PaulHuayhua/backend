@@ -14,33 +14,33 @@ import java.util.Optional;
 @Transactional
 public class PurchaseServiceImpl implements PurchaseService {
 
-    private final PurchaseRepository buysRepository;
+    private final PurchaseRepository purchaseRepository;
 
     @Autowired
-    public PurchaseServiceImpl(PurchaseRepository buysRepository) {
-        this.buysRepository = buysRepository;
+    public PurchaseServiceImpl(PurchaseRepository purchaseRepository) {
+        this.purchaseRepository = purchaseRepository;
     }
 
     @Override
     public List<Purchase> findAll() {
-        return buysRepository.findAll();
+        return purchaseRepository.findAll();
     }
 
     @Override
-    public Optional<Purchase> findById(Long identifier) {
-        return buysRepository.findById(identifier);
+    public Optional<Purchase> findById(Long id) {
+        return purchaseRepository.findById(id);
     }
 
     @Override
-    public Purchase save(Purchase buys) {
-        return buysRepository.save(buys);
+    public Purchase save(Purchase purchase) {
+        return purchaseRepository.save(purchase);
     }
 
     @Override
-    public Purchase update(Purchase buys) {
-        if (buys.getIdentifier() == null || !buysRepository.existsById(buys.getIdentifier())) {
-            throw new RuntimeException("Buys with identifier " + buys.getIdentifier() + " does not exist");
+    public Purchase update(Purchase purchase) {
+        if (purchase.getIdentifier() == null || !purchaseRepository.existsById(purchase.getIdentifier())) {
+            throw new RuntimeException("Purchase with ID " + purchase.getIdentifier() + " does not exist");
         }
-        return buysRepository.save(buys);
+        return purchaseRepository.save(purchase);
     }
 }

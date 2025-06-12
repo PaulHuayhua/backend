@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name = "buys")
+@Table(name = "purchase")  // Coincide con tu tabla en la base de datos
 public class Purchase {
 
     @Id
@@ -16,8 +16,8 @@ public class Purchase {
     @Column(name = "identifier")
     private Long identifier;
 
-    @Column(name = "buys_date", nullable = false)
-    private LocalDateTime buys_date;
+    @Column(name = "purchase_date", nullable = false)
+    private LocalDateTime purchase_date;
 
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)
     private BigDecimal total_price;
@@ -30,8 +30,8 @@ public class Purchase {
 
     @ElementCollection
     @CollectionTable(
-        name = "buys_detail",
-        joinColumns = @JoinColumn(name = "buys_identifier")
+        name = "purchase_detail",
+        joinColumns = @JoinColumn(name = "purchase_identifier")
     )
     private List<Detail> details;
 
@@ -47,5 +47,12 @@ public class Purchase {
 
         @Column(name = "subtotal", nullable = false, precision = 10, scale = 2)
         private BigDecimal subtotal;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        if (purchase_date == null) {
+            purchase_date = LocalDateTime.now();
+        }
     }
 }

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Data
-@Table(name = "buys_detail")
+@Table(name = "purchase_detail")  // Asegúrate de que el nombre coincida con tu base de datos
 public class PurchaseDetail {
 
     @Id
@@ -24,6 +24,6 @@ public class PurchaseDetail {
     private Long product_identifier;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "buys_identifier")
-    private Purchase buys;
+    @JoinColumn(name = "purchase_identifier")  // nombre de la FK en tu tabla purchase_detail
+    private Purchase purchase;
 }

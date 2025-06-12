@@ -50,11 +50,10 @@ public class ProductRest {
         return productService.save(product);
     }
 
-
     // Actualizar un producto existente
-    @PutMapping("/update")
-    public Product update(@RequestBody Product product) {
-        return productService.update(product);
+    @PutMapping("/update/{id}")
+    public Product update(@PathVariable Long id, @RequestBody Product product) {
+        return productService.update(id, product);
     }
 
     // ✅ Eliminar producto (cambia estado a 'I')
@@ -69,4 +68,3 @@ public class ProductRest {
         return productService.restoreById(id);
     }
 }
-
